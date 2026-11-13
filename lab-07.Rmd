@@ -133,10 +133,34 @@ evals<-read.csv("data/evals.csv", row.names=1)
 1.  Visualize the distribution of `score` in the dataframe `evals`.
 
 ```{r viz-score}
-# add code here
+
+evals %>%
+  ggplot(aes(x = score)) +
+  geom_histogram(binwidth = 0.25, fill = "plum") 
+
+evals %>%
+  summarise(
+    mean = mean(score, na.rm = TRUE),
+    median = median(score, na.rm = TRUE),
+    sd = sd(score, na.rm = TRUE),
+    min = min(score, na.rm = TRUE),
+    max = max(score, na.rm = TRUE)
+  )
+
+
+evals %>% drop_na(score, bty_avg) %>%
+  ggplot(aes(x = bty_avg, y= score)) +
+  geom_point(colour = "plum") +
+  geom_smooth(method = "lm", se = FALSE, colour = "palevioletred") 
+
+evals %>% drop_na(score, bty_avg) %>%
+  ggplot(aes(x = bty_avg, y= score)) +
+  geom_jitter(colour = "mediumpurple") +
+  geom_smooth(method = "lm", se = FALSE, colour = "cornflowerblue") 
+
 ```
 
-*Add your other details and narratives here.*
+_Model is left leaning, hence resulting in a negative skew showing that students generally rate courses higher. Jitter adds small amount of noise. Multiple observations share identical bty_avg and score values. These observations overlap, making them appear as a single point. This creates the misleading impression that there are fewer observations in certain regions than there actually are. Jitter makes the density and frequency of observations easier to see._
 
 2.  Visualize and describe the relationship between `score` and `bty_avg` using `geom_point()` to represent the data. 
 
