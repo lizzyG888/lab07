@@ -45,10 +45,17 @@ _With a bandwidth of 2500, the histogram provides greater detail as the specifie
 # Exercise 2: Exploring relationship
 
 ```{r}
-#your code here
+college_grad_df %>% drop_na(sharewomen, median) %>%
+  ggplot(aes(x = sharewomen, y= median)) +
+  geom_point(colour = "plum") +
+  geom_smooth(method = "lm", se = FALSE, colour = "palevioletred") 
+
+
+coef(lm(median ~ sharewomen, data = college_grad_df))
+
 ```
 
-*Your explanation*
+_From the scatter plot, there is a distinct negative correlation between a higher share of women and majors with lower median earnings, the formula of the line of best fit being: y = 56100 - 30700x, where y is median and x is sharewomen. Additionally, the negative gradient of -30700 indicates that for every 1 unit increase in the proportion of women, the predicted median earnings decrease by roughly $30,700._
 
 # Exercise 3: Fit and interpret a numerical predictor
 
