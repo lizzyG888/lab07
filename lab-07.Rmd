@@ -60,10 +60,30 @@ _From the scatter plot, there is a distinct negative correlation between a highe
 # Exercise 3: Fit and interpret a numerical predictor
 
 ```{r}
-#your code here
+
+share_fit = linear_reg() %>%
+  set_engine("lm") %>%
+  fit(median ~ sharewomen, data = college_grad_df)
+
+tidy(share_fit)
+
+glance(share_fit)
+
+share_fit_aug = augment(share_fit$fit)
+
+share_fit_aug %>% 
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Fitted values", y = "Residuals")
+
+
+
 ```
 
-*Your explanation*
+_median = 56100 - 30700 sharewomen, is the formula of the fitted model. The negative gradient of -30700 indicates that for every 1 unit increase in the proportion of women, the predicted median earnings decrease by roughly $30,700 - just like the initial visualisation._
+
+_Doesn't seem like there is a distinct trend or pattern, insinuating that a linear model may be suitable to model the data, however one could argue that the scatter plots fan out slightly at the end as the fitted values increase._
 
 # Exercise 4: Consider a categorical variable instead 
 
