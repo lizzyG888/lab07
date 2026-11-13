@@ -148,6 +148,15 @@ evals %>%
   )
 
 
+
+```
+
+_Model is left leaning, hence resulting in a negative skew showing that students generally rate courses higher._
+
+2.  Visualize and describe the relationship between `score` and `bty_avg` using `geom_point()` to represent the data. 
+
+```{r scatterplot}
+
 evals %>% drop_na(score, bty_avg) %>%
   ggplot(aes(x = bty_avg, y= score)) +
   geom_point(colour = "plum") +
@@ -160,15 +169,7 @@ evals %>% drop_na(score, bty_avg) %>%
 
 ```
 
-_Model is left leaning, hence resulting in a negative skew showing that students generally rate courses higher. Jitter adds small amount of noise. Multiple observations share identical bty_avg and score values. These observations overlap, making them appear as a single point. This creates the misleading impression that there are fewer observations in certain regions than there actually are. Jitter makes the density and frequency of observations easier to see._
-
-2.  Visualize and describe the relationship between `score` and `bty_avg` using `geom_point()` to represent the data. 
-
-```{r scatterplot}
-# add code here
-```
-
-*Add your narrative and other details here.*
+_Jitter adds small amount of noise. Multiple observations share identical bty_avg and score values. These observations overlap, making them appear as a single point. This creates the misleading impression that there are fewer observations in certain regions than there actually are. Jitter makes the density and frequency of observations easier to see._
 
 # Exercise 2: Simple Linear regression with a numerical predictor
 
