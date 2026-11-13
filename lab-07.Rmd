@@ -175,50 +175,62 @@ _Jitter adds small amount of noise. Multiple observations share identical bty_av
 
 1. Fit a linear model called `score_bty_fit` to predict average professor evaluation `score` from average beauty rating (`bty_avg`). Print the regression output using `tidy()`.
 
-```{r fit-score_bty_fit, eval = FALSE}
+```{r fit-score_bty_fit}
 # remove eval = FALSE from the code chunk options after filling in the blanks
 score_bty_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(___ ~ ___, data = ___)
+  fit(score ~ bty_avg, data = evals)
 ```
 
-```{r tidy-score_bty_fit, eval = FALSE}
+```{r tidy-score_bty_fi}
 # remove eval = FALSE from the code chunk options after filling in the blanks
-tidy(___)
+tidy(score_bty_fit)
 ```
 
-*Add your linear model here. Don't worry too much about notation, you can use things like score-hat.*
+_score = 3.880 + 0.067bty_avg._
 
 2. Plot the data again using `geom_jitter()`, and add the regression line.
 
-```{r viz-score_bty_fit,eval=FALSE}
-# add your plot here. Hint, you can add the regression line using geom_smooth()
+```{r viz-score_bty_fit}
+
+evals %>% drop_na(score, bty_avg) %>%
+  ggplot(aes(x = bty_avg, y= score)) +
+  geom_jitter(colour = "mediumpurple") +
+  geom_smooth(method = "lm", se = FALSE, colour = "cornflowerblue") 
+
+
 ```
 
 3. Interpret the slope of the linear model in context of the data.
 
-*Add your interpretation here*
+_The gradient of the regression line tells you how much the predicted score changes for every 1-unit increase in bty_avg._
 
 4. Interpret the intercept of the linear model in context of the data. Comment on whether or not the intercept makes sense in this context.
 
-*Add your interpretation here*
+_The model shows that as bty_avg increases, so does score. The intercept represents the predicted teaching score for a lecturer with an average beauty rating of 0._
 
 5. Determine the $R^2$ of the model and interpret it in the context of the data.
 
-```{r R2, eval = FALSE}
+```{r R2}
 # remove eval = FALSE from the code chunk options after filling in the blanks
-glance(___)$___
+glance(score_bty_fit)
 ```
 
-*Add your interpretation here*
+_the r squared value is 0.03502226, representing the proportion of variation in score that is explained by the linear regression model using bty_avg._
 
 6. Make a plot of residuals vs. predicted values for the model above.
 
-```{r viz-score_bty_fit-diagnostic, eval = FALSE}
+```{r viz-score_bty_fit-diagnostic}
 # remove eval = FALSE from the code chunk options after filling in the blanks
 score_bty_aug <- augment(score_bty_fit$fit)
 
-ggplot(___) + ...
+
+score_bty_aug %>% 
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Fitted values", y = "Residuals")
+
 ```
 
 # Exercise 3: Simple Linear regression with a categorical predictor
