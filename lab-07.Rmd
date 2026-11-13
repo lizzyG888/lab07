@@ -159,7 +159,7 @@ _Model is left leaning, hence resulting in a negative skew showing that students
 
 evals %>% drop_na(score, bty_avg) %>%
   ggplot(aes(x = bty_avg, y= score)) +
-  geom_point(colour = "plum") +
+  geom_point(colour = "plum", alpha = 0.4) +
   geom_smooth(method = "lm", se = FALSE, colour = "palevioletred") 
 
 evals %>% drop_na(score, bty_avg) %>%
@@ -330,6 +330,16 @@ evals %>%
   geom_jitter() +
   geom_smooth(method = "lm", se = FALSE)
 
+coef(lm(score ~ bty_avg, data = evals))
+
+temp = evals %>% filter(gender == "female")
+
+coef(lm(score ~ bty_avg, data = temp))
+
+temp = evals %>% filter(gender == "male")
+
+coef(lm(score ~ bty_avg, data = temp))
+
 ```
 
 2. What percent of the variability in `score` is explained by the model `score_bty_gender_fit`. 
@@ -349,7 +359,7 @@ _Depends on the score, higher the score, male teachers tend to have the higher c
 
 5. How does the relationship between beauty and evaluation score vary between male and female professors?
 
-_males have a steeper slope/gradient than the lobf for females, etc..._
+_Males have a steeper slope/gradient than the lobf for females, etc..._
 
 6. How do the adjusted $R^2$ values of `score_bty_fit` and `score_bty_gender_fit` compare? 
 
@@ -359,11 +369,11 @@ glance(score_bty_fit)$adj.r.squared
 glance(score_bty_gender_fit)$adj.r.squared
 ```
 
-_as the r squared value of score_bty_fit is 3.29% and score_bty_gender_fit is 5.50%, the model considering gender as well has a substantially larger percentage showing that the model can explain more of the variation of the the socre variable, hence showing that it is a more suitable/better model over the first model of score_bty_fit._
+_As the r squared value of score_bty_fit is 3.29% and score_bty_gender_fit is 5.50%, the model considering gender as well has a substantially larger percentage showing that the model can explain more of the variation of the the socre variable, hence showing that it is a more suitable/better model over the first model of score_bty_fit._
 
 7. Compare the slopes of `bty_avg` under the two models (`score_bty_fit` and `score_bty_gender_fit`).
 
-_The gradient fro score_bty_fit os 0.06663704, and for score_bty_gender_fit, the gradient is 0.07415537, showing that when considering gender as well, the gradient is steeper..._
+_The gradient for score_bty_fit of 0.06663704, and for score_bty_gender_fit, the gradient is 0.07415537, showing that when considering gender as well, the gradient is steeper..._
 
 # Exercise 5: Interpretation of log-transformed response variables
 
