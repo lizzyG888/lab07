@@ -309,15 +309,25 @@ score_gender_slope <- tidy(score_gender_fit) %>%
 1. Fit a multiple linear regression model, predicting average professor evaluation `score` based on average beauty rating (`bty_avg`) and `gender.`
 
 ```{r fit-score_bty_gender_fit}
-# fit model
+score_bty_gender_fit = linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ bty_avg + gender, data = evals)
 
-# tidy model output
+tidy(score_bty_gender_fit)
+
+glance(score_bty_gender_fit)
+
 ```
 
 *Add your narrative here.*
 
-```{r eval = FALSE}
-ggplot(___) + ...
+```{r}
+evals %>%
+  drop_na(score, bty_avg, gender) %>%
+  ggplot(aes(x = bty_avg, y = score, colour = gender)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE)
+
 ```
 
 2. What percent of the variability in `score` is explained by the model `score_bty_gender_fit`. 
@@ -341,10 +351,10 @@ ggplot(___) + ...
 
 6. How do the adjusted $R^2$ values of `score_bty_fit` and `score_bty_gender_fit` compare? 
 
-```{r eval=FALSE}
+```{r }
 # remove eval = FALSE from the code chunk options after filling in the blanks
-glance(___)$adj.r.squared
-glance(___)$adj.r.squared
+glance(score_bty_fit)$adj.r.squared
+glance(score_bty_gender_fit)$adj.r.squared
 ```
 
 *Add your narrative here.*
@@ -356,3 +366,5 @@ glance(___)$adj.r.squared
 # Exercise 5: Interpretation of log-transformed response variables
 
 If you do not know how to use LaTeX, do this exercise with pen and paper.
+
+_No_
