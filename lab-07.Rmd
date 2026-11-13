@@ -88,10 +88,36 @@ _Doesn't seem like there is a distinct trend or pattern, insinuating that a line
 # Exercise 4: Consider a categorical variable instead 
 
 ```{r}
-#your code here
+
+college_grad_df = college_grad_df %>% mutate(
+  engineering = case_when(
+    str_detect(major, regex("engineering", ignore_case = TRUE)) ~ "Engineering",
+    TRUE ~ "Other"
+  )
+)
+
+share_fit2 = linear_reg() %>%
+  set_engine("lm") %>%
+  fit(median ~ engineering, data = college_grad_df)
+
+tidy(share_fit2)
+
+glance(share_fit2)
+
+share_fit2_aug = augment(share_fit2$fit)
+
+share_fit2_aug %>% 
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Fitted values", y = "Residuals")
+
+levels(as.factor(college_grad_df$engineering))
+
+
 ```
 
-*Your explanation*
+_The baseline category is Engineering. The intercept of 58,388.46 represents the average median earnings of Engineering majors, approximately $58,388.46. The slope of -21,462.61 indicates that Other majors have average median earnings approximately $21,462.61 lower than Engineering majors, giving them predicted average median earnings of $36,925.85._
 
 ---
 
