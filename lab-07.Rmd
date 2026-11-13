@@ -238,28 +238,55 @@ score_bty_aug %>%
 0. Look at the variable rank, and determine the frequency of each category level.
 
 ```{r}
-# ... 
+count(evals, rank)
 ```
 
 1. Fit a new linear model called `score_rank_fit` to predict average professor evaluation `score` based on `rank` of the professor.
 
 ```{r fit-score_rank_fit}
-# fit model
 
-# tidy model output
+score_rank_fit = linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ rank, data = evals)
+
+tidy(score_rank_fit)
+
+glance(score_rank_fit)
+
+score_rank_fit_aug = augment(score_rank_fit$fit)
+
+score_rank_fit_aug %>% 
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Fitted values", y = "Residuals")
+
+
 ```
 
-*Add your narrative here.*
+_No_
 
 2. Fit a new linear model called `score_gender_fit` to predict average professor evaluation `score` based on `gender` of the professor. 
 
 ```{r fit-score_gender_fit}
-# fit model
+score_gender_fit = linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ gender, data = evals)
 
-# tidy model output
+tidy(score_gender_fit)
+
+glance(score_gender_fit)
+
+score_gender_fit_aug = augment(score_gender_fit$fit)
+
+score_gender_fit_aug %>% 
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Fitted values", y = "Residuals")
 ```
 
-```{r score_gender_intercept, eval=FALSE}
+```{r score_gender_intercept}
 # remove eval = FALSE from the code chunk options
 score_gender_intercept <- tidy(score_gender_fit) %>% 
   filter(term == "(Intercept)") %>%
@@ -267,7 +294,7 @@ score_gender_intercept <- tidy(score_gender_fit) %>%
   pull()
 ```
 
-```{r score_gender_slope, eval=FALSE}
+```{r score_gender_slope}
 # remove eval = FALSE from the code chunk options
 score_gender_slope <- tidy(score_gender_fit) %>% 
   filter(term == "gendermale") %>%
