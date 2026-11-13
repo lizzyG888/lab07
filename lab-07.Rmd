@@ -26,10 +26,20 @@ glimpse(college_grad_df)
 # Exercise 1: Exploratory Data Analysis
 
 ```{r}
-#your code here
+
+college_grad_df %>% ggplot() +
+  geom_histogram(aes(x= median), fill = "plum")
+
+college_grad_df %>% ggplot() +
+  geom_histogram(aes(x= median), fill = "palevioletred", binwidth = 2500)
+
+
+college_grad_df %>%
+  count(major_category, sort = TRUE)
+
 ```
 
-*Your explanation*
+_With a bandwidth of 2500, the histogram provides greater detail as the specified bandwidth is smaller than the standard, resulting in more bars. Regardless, the model is right leaning, leading to a positive skew, the count peaking/concentrated around a median of 3.5e+04. It also seems like there is a potential outlier around 1.1e+05_
 
 
 # Exercise 2: Exploring relationship
