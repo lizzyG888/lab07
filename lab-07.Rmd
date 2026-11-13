@@ -317,6 +317,8 @@ tidy(score_bty_gender_fit)
 
 glance(score_bty_gender_fit)
 
+levels(as.factor(evals$gender))
+
 ```
 
 *Add your narrative here.*
@@ -333,21 +335,21 @@ evals %>%
 2. What percent of the variability in `score` is explained by the model `score_bty_gender_fit`. 
 
 ```{r}
-# ...
+glance(score_bty_gender_fit)
 ```
-
+_5.9% of the variation in score is explained by the model - as shown by the r squared value._
 
 3. What is the equation of the line corresponding to just male professors?
 
-*Add your equation here.*
+_score = 3.74733824	+ 0.17238955gendermen_
 
 4. For two professors who received the same beauty rating, which gender tends to have the higher course evaluation score?
 
-*Add your narrative here.*
+_Depends on the score, higher the score, male teachers tend to have the higher course evaluation score, however for low scores, female teachers tend to have the higher course evaluation score._
 
 5. How does the relationship between beauty and evaluation score vary between male and female professors?
 
-*Add your narrative here.*
+_males have a steeper slope/gradient than the lobf for females, etc..._
 
 6. How do the adjusted $R^2$ values of `score_bty_fit` and `score_bty_gender_fit` compare? 
 
@@ -357,11 +359,11 @@ glance(score_bty_fit)$adj.r.squared
 glance(score_bty_gender_fit)$adj.r.squared
 ```
 
-*Add your narrative here.*
+_as the r squared value of score_bty_fit is 3.29% and score_bty_gender_fit is 5.50%, the model considering gender as well has a substantially larger percentage showing that the model can explain more of the variation of the the socre variable, hence showing that it is a more suitable/better model over the first model of score_bty_fit._
 
 7. Compare the slopes of `bty_avg` under the two models (`score_bty_fit` and `score_bty_gender_fit`).
 
-*Add your narrative here.*
+_The gradient fro score_bty_fit os 0.06663704, and for score_bty_gender_fit, the gradient is 0.07415537, showing that when considering gender as well, the gradient is steeper..._
 
 # Exercise 5: Interpretation of log-transformed response variables
 
